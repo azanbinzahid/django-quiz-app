@@ -22,26 +22,23 @@ def detail(request, quiz_id):
     return render(request, 'quiz/detail.html', context)
 
 
-def results(request, question_id):
+def results(request, quiz_id):
     response = "You're looking at the results of question %s."
-    return HttpResponse(response % question_id)
+    return HttpResponse(response % quiz_id)
 
 
-def vote(request, question_id):
-    question = Question.objects.get(pk=question_id)
-    try:
-        selected_choice = question.choice_set.get(pk=request.POST['choice'])
-    except (KeyError, Choice.DoesNotExist):
-        # Redisplay the question voting form.
-        return render(request, 'quiz/detail.html', {
-            'question': question,
-            'error_message': "You didn't select a choice.",
-        })
-    else:
-        score = 0
-        if selected_choice.correct_ans == True:
-            score = 10
-        # Always return an HttpResponseRedirect after successfully dealing
-        # with POST data. This prevents data from being posted twice if a
-        # user hits the Back button.
-        return HttpResponseRedirect(reverse('quiz:results', args=(question.id,)))
+def vote(request, quiz_id):
+    quiz = Quiz.objects.get(pk=quiz_id)
+    print(request.POST)
+    score = 0
+    for ch in request.POST:
+        try:
+            selected_choice = Choice.objects.get(pk=request.POST[ch])
+            if selected_choice.correct_ans == True:
+                score += 10
+            print(selected_choice)
+        except:
+            pass
+        
+    response = "You're looking at the results of quiz {}. You got {} score"
+    return HttpResponse(response.format(quiz_id, score))
