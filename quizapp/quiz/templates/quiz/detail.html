@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>My test page</title>
+  </head>
+  <body>
+    {% if quiz %}
+    <h2> {{quiz.quiz_desc}} </h2>
+    <ul>
+    {% for question in quiz.question_set.all %}
+        <h3>{{ question.question_text }}</h3>
+        <form action="{% url 'quiz:vote' question.id %}" method="post">
+          {% csrf_token %}
+          {% for choice in question.choice_set.all %}
+              <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+              <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+          {% endfor %}
+          <input type="submit" value="Vote">
+        </form>
+
+    {% endfor %}
+    </ul>
+    {% else %}
+        <p>No quiz are available.</p>
+    {% endif %}
+
+
+        
+  </body>
+</html>

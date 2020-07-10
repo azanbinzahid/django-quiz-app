@@ -8,7 +8,7 @@
     {% if latest_quiz_list %}
     <ul>
     {% for quiz in latest_quiz_list %}
-        <li><a href="/quiz/{{ quiz.id }}/">{{ quiz.quiz_desc }}</a></li>
+        <li><a href = {% url 'quiz:detail' quiz.id %}> {{ quiz.quiz_desc }}</a></li>
     {% endfor %}
     </ul>
     {% else %}
