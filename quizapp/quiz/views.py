@@ -27,18 +27,20 @@ def results(request, quiz_id):
     return HttpResponse(response % quiz_id)
 
 
-def vote(request, quiz_id):
+def vote(request, quiz_id): 
     quiz = Quiz.objects.get(pk=quiz_id)
-    print(request.POST)
     score = 0
     for ch in request.POST:
         try:
             selected_choice = Choice.objects.get(pk=request.POST[ch])
             if selected_choice.correct_ans == True:
                 score += 10
-            print(selected_choice)
         except:
             pass
-        
-    response = "You're looking at the results of quiz {}. You got {} score"
-    return HttpResponse(response.format(quiz_id, score))
+    
+    context = {
+        'quiz' : quiz,
+        'score': score
+    }
+
+    return render(request, 'quiz/vote.html', context)

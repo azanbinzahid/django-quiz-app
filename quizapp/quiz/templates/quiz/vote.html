@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Quiz Results</title>
+  </head>
+  <body>
+    {% if quiz %}
+        <h2> {{quiz.quiz_desc}} </h2>
+        <h2> Score: {{score}} </h2>
+    {% else %}
+        <p>No quiz are available.</p>
+    {% endif %}
+        
+  </body>
+</html>
