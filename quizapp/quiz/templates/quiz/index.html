@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>My test page</title>
+  </head>
+  <body>
+    {% if latest_quiz_list %}
+    <ul>
+    {% for quiz in latest_quiz_list %}
+        <li><a href="/quiz/{{ quiz.id }}/">{{ quiz.quiz_desc }}</a></li>
+    {% endfor %}
+    </ul>
+    {% else %}
+        <p>No polls are available.</p>
+    {% endif %}
+
+
+        
+  </body>
+</html>
