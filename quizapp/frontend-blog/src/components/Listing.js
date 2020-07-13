@@ -7,7 +7,7 @@ class Listing extends Component {
         const posts = this.props.posts;
         if (posts.length === 0) return null;        
         return (
-            <div classname="post_list_item"><React.Fragment>
+            <div className="post_list_item"><React.Fragment>
                 {Object.keys(posts).map(post =>(
                     <Post
                         key={post}
@@ -22,7 +22,7 @@ class Listing extends Component {
  
     render() { 
         return ( 
-                <div classname="post_list">
+                <div className="post_list">
                     {this.showPosts() }
                 </div>
  

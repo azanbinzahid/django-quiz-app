@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import Swal from 'sweetalert2';
-import './Post.css';
+import './Post.css';    
 import moment from 'moment';
 import Paper from '@material-ui/core/Paper';
 import Divider from '@material-ui/core/Divider';
@@ -56,7 +56,7 @@ class Post extends Component {
                         <ul className="buttons">
                             <li><Link to={`/post/${id}`} className="btn btn-primary"> Show </Link></li>
                             <li><Link to={`/edit/${id}`} className="btn btn-warning"> Edit </Link></li>
-                            <li><Link onClick={this.confirmDeletion} className="btn btn-danger">Delete</Link></li>
+                            <li><Link to={'/'} onClick={this.confirmDeletion} className="btn btn-danger">Delete</Link></li>
                         </ul>
                     </div>                   
             </Paper>

@@ -7,7 +7,7 @@ export default () => {
   return (
     <AppBar position="static">
       <Toolbar>
-        <Typography variant="headline" color="colorSecondary" noWrap>
+        <Typography variant="caption" color="secondary" noWrap>
           Simple Blog Example
         </Typography>
       </Toolbar>
