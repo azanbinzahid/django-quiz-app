@@ -1,6 +1,7 @@
-from django.urls import path
-from . import views
+from rest_framework import routers
+from .api import BlogViewSet
 
-urlpatterns = [
-    path('api/blog/', views.BlogListCreate.as_view() ),
-]
+router = routers.DefaultRouter()
+router.register('api/blog', BlogViewSet, 'blog')
+
+urlpatterns = router.urls

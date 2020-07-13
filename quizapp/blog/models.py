@@ -1,8 +1,8 @@
 from django.db import models
 
 class Blog(models.Model):
-    name = models.CharField(max_length=100)
-    email = models.EmailField()
-    topic = models.CharField(max_length=100)
-    blog = models.CharField(max_length=500)
-    pub_date = models.DateTimeField(auto_now_add=True)
+    author = models.CharField(max_length=100)
+    title = models.CharField(max_length=100)
+    body = models.CharField(max_length=500)
+    category = models.CharField(max_length=100, default = "General")
+    datestamp = models.DateTimeField(auto_now_add=True)
