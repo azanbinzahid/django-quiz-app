@@ -11,19 +11,19 @@ class Form extends Component {
     createPost = (e) => {
         e.preventDefault();
  
-        // const post = {
-        //     author: this.authorRef.current.value,
-        //     title: this.titleRef.current.value,
-        //     body: this.contentRef.current.value,
-        //     category: this.categoryRef.current.value
-        // }
-
         const post = {
-            author: "abc",
-            title: "abc",
-            body: "abc",
-            category: "abc"
+            author: this.authorRef.current.value,
+            title: this.titleRef.current.value,
+            body: this.contentRef.current.value,
+            category: this.categoryRef.current.value
         }
+
+        // const post = {
+        //     author: "abc",
+        //     title: "abc",
+        //     body: "abc",
+        //     category: "abc"
+        // }
  
         this.props.createPost(post);
  

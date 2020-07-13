@@ -47,11 +47,11 @@ class Router extends Component {
     createPost = (post) => {
         let axiosConfig = {
             headers: {
-                'Content-Type': 'application/json;charset=UTF-8',
-                "Access-Control-Allow-Origin": "*",
+                'Content-Type': 'application/json',
+                // "Access-Control-Allow-Origin": "*",
             }
           };
-        axios.post(`http://localhost:8000/blog/api/blog/`, {post}, axiosConfig)
+        axios.post(`http://localhost:8000/blog/api/blog/`, post, axiosConfig)
              .then(res => {
                  if (res.status === 201) {
                     Swal.fire(
@@ -73,7 +73,7 @@ class Router extends Component {
     editPost = (postUpdate) => {
         const {id} = postUpdate;
  
-        axios.put(`http://localhost:8000/blog/api/blog/${id}/`, {postUpdate})
+        axios.put(`http://localhost:8000/blog/api/blog/${id}/`, postUpdate)
              .then(res => {
                  if (res.status === 200) {
                     Swal.fire(
