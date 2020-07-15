@@ -42,7 +42,11 @@ class UserList(APIView):
 class BlogViewSet(generics.ListCreateAPIView):
     queryset = Blog.objects.all()
     permission_classes = [
-        permissions.AllowAny
+        # permissions.AllowAny
+        permissions.IsAuthenticated
     ]
     serializer_class = BlogSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
 
