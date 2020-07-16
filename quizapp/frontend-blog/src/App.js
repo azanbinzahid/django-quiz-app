@@ -140,7 +140,7 @@ const App = () => {
   const dispatch = useDispatch()
   
   useEffect(() => {
-    dispatch(autoLogin())
+    // dispatch(autoLogin())
   }, [])
 
   const handleLogout = useCallback(() => {

@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchUser} from '../redux/actions'
+import {useHistory} from 'react-router-dom'
 
 class Login extends React.Component {
     state = {
@@ -13,11 +14,13 @@ class Login extends React.Component {
         this.setState(() => ({
             [e.target.name]: e.target.value 
         }))
-    }
+    };
+
 
     onSubmit = (e) => {
-        e.preventDefault()
+        // e.preventDefault()
         this.props.fetchUser(this.state)
+        this.props.history.push('/')
     }
 
     render(){

@@ -11,6 +11,8 @@ const ShowBlogs = () =>  {
       dispatch(getBlogs())
     }, [])
     
+    console.log(userReducer)
+    console.log(commentReducer)
 
     if (userReducer.loggedIn) {
     let titles = commentReducer.blogs.map((blog)=>{
@@ -23,7 +25,7 @@ const ShowBlogs = () =>  {
         <ul> {titles} </ul> 
     </div>)
     } else {
-        return <div> </div>
+        return <div> Login first </div>
     }
 }
 

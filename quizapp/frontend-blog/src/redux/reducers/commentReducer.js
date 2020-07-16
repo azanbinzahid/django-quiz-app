@@ -1,5 +1,4 @@
 const defaultState = {
-    loggedIn: false,
     blogs: []
 }
 
