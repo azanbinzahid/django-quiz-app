@@ -127,62 +127,50 @@
 // export default App;
 
 
-import React from 'react';
+import React, {useEffect, useCallback} from 'react'
 import './App.css';
-import {connect} from 'react-redux'
+import {useSelector, useDispatch} from 'react-redux'
 import Login from './components/Login'
 import Signup from './components/Signup'
 import ShowBlogs from './components/ShowBlogs'
 import {autoLogin, logUserOut} from './redux/actions'
 
-class App extends React.Component{
+const App = () => {
+  const userReducer = useSelector(state => state.userReducer)
+  const dispatch = useDispatch()
+  
+  useEffect(() => {
+    dispatch(autoLogin())
+  }, [])
 
-  componentDidMount(){
-    this.props.autoLogin()
-  }
+  const handleLogout = useCallback(() => {
+    dispatch(logUserOut())
+  })
+  
+  
+  return (
+    <div className="App">
+        {
+          !userReducer.loggedIn ? <h1>Sign Up or Login!</h1> : <h1>Welcome, {userReducer.user.username}</h1>
+        }
 
-  handleLogout = (e) => {
-    e.preventDefault()
-    this.props.logUserOut()
-  }
-
-  render(){
-    return (
-      <div className="App">
-            {
-              !this.props.userReducer.loggedIn ? <h1>Sign Up or Login To See Blogs!</h1> : <h1>Welcome to Blogs, {this.props.userReducer.user.username}</h1>
-            }
-          <br/>
-          <br/>
-          <div className="container">
-          <div className="row">
-          <div className="col-4">
-           
-           <Signup/>
-           <Login/>
-           <button onClick={this.handleLogout} >Logout</button>
-           </div>
-          <div className="col-8">
-           <ShowBlogs/>
-           </div>
-           </div>
-           </div>
-      </div>
-    );
-  }
+        <br/>
+        <br/>
+        <div className="container">
+        <div className="row">
+        <div className="col-4">
+        
+        <Signup/>
+        <Login/>
+        <button onClick={handleLogout} >Logout</button>
+        </div>
+        <div className="col-8">
+        <ShowBlogs/>
+        </div>
+        </div>
+        </div>
+    </div>
+  )
 }
 
-const mapStateToProps = (state) => {
-  return {
-    userReducer: state.userReducer
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    autoLogin: () => dispatch(autoLogin()),
-    logUserOut: () => dispatch(logUserOut()),
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App

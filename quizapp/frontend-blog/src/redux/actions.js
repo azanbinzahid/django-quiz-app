@@ -7,6 +7,21 @@ export const logUserOut = () => ({type: "LOG_OUT"})
 
 // Methods
 
+export const getBlogs = () => dispatch => {
+    fetch(`http://localhost:8000/blog/api/blog/`, {
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization": `JWT ${localStorage.getItem("token")}`
+        }
+    })
+    .then(res => res.json())
+    .then(data => {
+        // console.log("blog", data)
+        dispatch(setBlogs(data))
+    })
+  }
+
 export const fetchUser = (userInfo) => dispatch => {
     fetch(`http://localhost:8000/token-auth/`, {
         method: "POST",
@@ -16,16 +31,21 @@ export const fetchUser = (userInfo) => dispatch => {
         },
         body: JSON.stringify(userInfo)
     })
-    .then(res => res.json())
+    .then(res => {
+        if (!res.ok){
+            throw new Error(res.status)
+        } else {
+            return res.json()
+        }
+    }) 
     .then(data => {
-        // data sent back will in the format of
-        // {
-        //     user: {},
-        //.    token: "aaaaa.bbbbb.bbbbb"
-        // }
         console.log("login", data)
         localStorage.setItem("token", data.token)
         dispatch(setUser(data.user))
+        dispatch(getBlogs())
+    })
+    .catch((error)=>{
+        console.log(error)
     })
 }
 
@@ -38,19 +58,23 @@ export const signUserUp = (userInfo) => dispatch => {
         },
         body: JSON.stringify(userInfo)
     })
-    .then(res => res.json())
+    .then(res => {
+        if (!res.ok){
+            throw new Error(res.status)
+        } else {
+            return res.json()
+        } 
+    })
     .then(data => {
-        // data sent back will in the format of
-        // {
-        //     user: {},
-        //.    token: "aaaaa.bbbbb.bbbbb"
-        // }
         let user= {
           "username": data.username
         }
         console.log("signup", data)
         localStorage.setItem("token", data.token)
         dispatch(setUser(user))
+    })
+    .catch((error)=>{
+        console.log(error)
     })
 }
 
@@ -62,13 +86,14 @@ export const autoLogin = () => dispatch => {
             "Authorization": `JWT ${localStorage.getItem("token")}`
         }
     })
-    .then(res => res.json())
+    .then(res => {
+        if (!res.ok){
+            throw new Error(res.status)
+        } else {
+            return res.json()
+        } 
+    })
     .then(data => {
-        // data sent back will in the format of
-        // {
-        //     user: {},
-        //.    token: "aaaaa.bbbbb.bbbbb"
-        // }
         if (data.detail){
           dispatch(logUserOut())
         } else {
@@ -80,19 +105,8 @@ export const autoLogin = () => dispatch => {
         dispatch(setUser(user))
       }
     })
+    .catch((error)=>{
+        console.log(error)
+    })
 }
 
-export const getBlogs = () => dispatch => {
-  fetch(`http://localhost:8000/blog/api/blog/`, {
-      headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json",
-          "Authorization": `JWT ${localStorage.getItem("token")}`
-      }
-  })
-  .then(res => res.json())
-  .then(data => {
-      // console.log("blog", data)
-      dispatch(setBlogs(data))
-  })
-}
