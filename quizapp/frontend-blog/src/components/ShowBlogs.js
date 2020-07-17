@@ -1,6 +1,7 @@
 import React,  {useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import {getBlogs} from '../redux/actions'
+import SinglePost from './SinglePost'
 
 const ShowBlogs = () =>  {
     const commentReducer = useSelector(state => state.commentReducer)
@@ -15,17 +16,30 @@ const ShowBlogs = () =>  {
     console.log(commentReducer)
 
     if (userReducer.loggedIn) {
-    let titles = commentReducer.blogs.map((blog)=>{
-        return <li key={blog.id}>{blog.title} by {blog.author}</li>
+    let allBlogs = commentReducer.blogs.map((blog)=>{
+        return (
+            <div>
+            <div className="col-12 border border-primary">
+                <h3>Title: {blog.title}</h3>
+                <h5>Author: {blog.author}</h5>
+                <p>{blog.body}</p>
+            </div>
+            <br/>
+            </div>
+        )
     })
     return (
     <div>
-        <h1> Blog Authors </h1>
-        <br/>
-        <ul> {titles} </ul> 
+        <div className="row">
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+        {allBlogs}
+        </div>
     </div>)
     } else {
-        return <div> Login first </div>
+        return <div> Please Login or Signup First Before Accessing this Page </div>
     }
 }
 

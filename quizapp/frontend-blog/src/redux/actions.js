@@ -110,3 +110,29 @@ export const autoLogin = () => dispatch => {
     })
 }
 
+export const createPost = (post) => dispatch => {
+    fetch(`http://localhost:8000/blog/api/blog/`,{
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization": `JWT ${localStorage.getItem("token")}`
+        },
+        body: JSON.stringify(post)
+    })
+    .then(res => {
+        console.log(res)
+        if (!res.ok){
+            console.log(res)
+            throw new Error(res.details)
+        } else {
+            return res.json()
+        } 
+    })
+    .then(data => {
+        console.log("write", data)
+    })
+    .catch((error)=>{
+        console.log(error)
+    })
+}

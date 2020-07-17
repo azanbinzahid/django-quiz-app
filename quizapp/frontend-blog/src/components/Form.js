@@ -1,69 +1,62 @@
-import React, { Component } from 'react';
- 
-class Form extends Component {
-    //create refs
-    authorRef = React.createRef();
-    titleRef = React.createRef();
-    contentRef = React.createRef();
-    categoryRef = React.createRef();
- 
- 
-    createPost = (e) => {
-        e.preventDefault();
- 
-        const post = {
-            author: this.authorRef.current.value,
-            title: this.titleRef.current.value,
-            body: this.contentRef.current.value,
-            category: this.categoryRef.current.value
-        }
+import React, { Component, useCallback } from 'react';
+import {useDispatch} from 'react-redux'
+import {createPost} from '../redux/actions'
 
-        // const post = {
-        //     author: "abc",
-        //     title: "abc",
-        //     body: "abc",
-        //     category: "abc"
-        // }
  
-        this.props.createPost(post);
+const Form = () => {
+    //create refs
+    let authorRef = React.createRef();
+    let titleRef = React.createRef();
+    let contentRef = React.createRef();
+    let categoryRef = React.createRef();
  
-    }
+    const dispatch = useDispatch()
+    
+    
+    const handlePost = useCallback((e) => {
+        e.preventDefault();
+        const post = {
+            author: authorRef.current.value,
+            title: titleRef.current.value,
+            body: contentRef.current.value,
+            category: categoryRef.current.value
+        }
+        dispatch(createPost(post))
+    })
  
- 
-    render() { 
-        return ( 
-            <form onSubmit={this.createPost} className="col-md-10">
-                <legend className="text-center">Create New Post</legend>
- 
-                <div className="form-group">
-                    <label>Title for the Post:</label>
-                    <input type="text" ref={this.titleRef} className="form-control" placeholder="Title.." />
-                </div>
- 
-                <div className="form-group">
-                    <label>Author:</label>
-                    <input type="text" ref={this.authorRef} className="form-control" placeholder="Tag your name.." />
-                </div>
- 
-                <div className="form-group">
-                    <label>Content:</label>
-                    <textarea className="form-control" rows="7"cols="25" ref={this.contentRef} placeholder="Here write your content.."></textarea>
-                </div>
- 
-                <div className="form-group">
-                    <label>Category</label>
-                <select ref={this.categoryRef} className="form-control">
-                    <option value="cars">Cars</option>
-                    <option value="nature">Nature</option>
-                    <option value="it">IT</option>
-                    <option value="books">Books</option>
-                    <option value="sport">Sport</option>
-                </select>
-                </div>
-                <button type="submit" className="btn btn-primary">Create</button>
-            </form>
-         );
-    }
+
+    return ( 
+        <div className="container pd-5">
+        <form onSubmit={handlePost} className="col-md-10">
+            <div className="form-group">
+                <label>Title for the Blog:</label>
+                <input type="text" ref={titleRef} className="form-control" placeholder="Title.." />
+            </div>
+
+            <div className="form-group">
+                <label>Author:</label>
+                <input type="text" ref={authorRef} className="form-control" placeholder="Enter your name.." />
+            </div>
+
+            <div className="form-group">
+                <label>Content:</label>
+                <textarea className="form-control" rows="3"cols="25" ref={contentRef} placeholder="Here write your content.."></textarea>
+            </div>
+
+            <div className="form-group">
+                <label>Category</label>
+            <select ref={categoryRef} className="form-control">
+                <option value="cars">Cars</option>
+                <option value="nature">Nature</option>
+                <option value="it">IT</option>
+                <option value="books">Books</option>
+                <option value="sport">Sport</option>
+            </select>
+            </div>
+            <button type="submit" className="btn btn-primary">Create</button>
+        </form>
+        </div>
+        );
 }
  
 export default Form;

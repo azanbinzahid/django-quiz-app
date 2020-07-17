@@ -9,26 +9,21 @@ import renderHTML from 'react-render-html';
 class SinglePost extends Component {
  
     showPost = (props) => {
-        if (!props.post) return null;
  
-        const {title, author, body, category, datestamp} = this.props.post;
- 
+        const {title, author, body, category, datestamp} = this.props;
+        console.log({author})
         return (
-            <React.Fragment>
- 
-                <Paper className="single_post"> 
+                <div className="single_post"> 
                     <h4>Title: {title}</h4>
-                    <Divider light />
+                    <br/>
                     <p><b>Autor:</b> {author}</p>
-                    <Divider light />
+                    <br/>
                     <p><b>Content:</b> {body}</p>
-                    <Divider light />
+                    <br/>
                     <p><b>Category:</b> {category}</p>
-                    <Divider light />
+                    <br/>
                     <h5>Create At: {moment(datestamp).format('DD MM YYYY')}</h5>
-                    <div style={{ width: '60%' }}>{renderHTML(body)}</div>
-                </Paper>
-            </React.Fragment>
+                </div>
         )
  
     }
