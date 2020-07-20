@@ -1,12 +1,12 @@
 import React, {useEffect, useCallback} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import {Switch, Route, Link } from "react-router-dom";
-import {autoLogin, logUserOut} from '../redux/actions'
-import Login from './Login'
-import Signup from './Signup'
-import ShowBlogs from './ShowBlogs'
-import Form from './Form'
-import ProtectedRoute from './ProtectedRoute'
+import {autoLogin, logUserOut} from 'redux/actions'
+import Login from 'components/Login'
+import Signup from 'components/Signup'
+import ShowBlogs from 'components/ShowBlogs'
+import Form from 'components/Form'
+import ProtectedRoute from 'components/ProtectedRoute'
 
 
 const MyRouter = () => {

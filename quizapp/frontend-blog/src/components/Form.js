@@ -1,6 +1,6 @@
 import React, { useCallback,  createRef } from 'react';
 import {useDispatch} from 'react-redux'
-import {createPost} from '../redux/actions'
+import {createPost} from 'redux/actions'
 
  
 const Form = () => {

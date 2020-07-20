@@ -1,6 +1,6 @@
 import React,  {useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
-import {getBlogs} from '../redux/actions'
+import {getBlogs} from 'redux/actions'
 
 const ShowBlogs = () =>  {
     const commentReducer = useSelector(state => state.commentReducer)
