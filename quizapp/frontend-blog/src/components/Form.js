@@ -1,14 +1,14 @@
-import React, { Component, useCallback } from 'react';
+import React, { useCallback,  createRef } from 'react';
 import {useDispatch} from 'react-redux'
 import {createPost} from '../redux/actions'
 
  
 const Form = () => {
     //create refs
-    let authorRef = React.createRef();
-    let titleRef = React.createRef();
-    let contentRef = React.createRef();
-    let categoryRef = React.createRef();
+    let authorRef = createRef();
+    let titleRef = createRef();
+    let contentRef = createRef();
+    let categoryRef = createRef();
  
     const dispatch = useDispatch()
     

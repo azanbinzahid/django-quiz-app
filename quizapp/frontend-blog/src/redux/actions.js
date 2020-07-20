@@ -17,7 +17,6 @@ export const getBlogs = () => dispatch => {
     })
     .then(res => res.json())
     .then(data => {
-        // console.log("blog", data)
         dispatch(setBlogs(data))
     })
   }
@@ -39,7 +38,6 @@ export const fetchUser = (userInfo) => dispatch => {
         }
     }) 
     .then(data => {
-        console.log("login", data)
         localStorage.setItem("token", data.token)
         dispatch(setUser(data.user))
         dispatch(getBlogs())
@@ -100,8 +98,6 @@ export const autoLogin = () => dispatch => {
         let user= {
           "username": data.username
         }
-        console.log("auto", data)
-        // localStorage.setItem("token", data.token)
         dispatch(setUser(user))
       }
     })
@@ -123,7 +119,6 @@ export const createPost = (post) => dispatch => {
     .then(res => {
         console.log(res)
         if (!res.ok){
-            console.log(res)
             throw new Error(res.details)
         } else {
             return res.json()

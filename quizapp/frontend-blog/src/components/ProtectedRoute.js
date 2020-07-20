@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import { Redirect } from 'react-router-dom'
 import {useSelector, useDispatch} from 'react-redux'
-import {autoLogin, logUserOut} from '../redux/actions'
+import {autoLogin} from '../redux/actions'
 
 const ProtectedRoute = (props) => {
     const userReducer = useSelector(state => state.userReducer)
@@ -14,18 +14,15 @@ const ProtectedRoute = (props) => {
 
     const Component = props.component;
     const isAuthenticated = userReducer.loggedIn;
-    // const isAuthenticated = localStorage.getItem('token');
+    // const isAuthenticated = localStorage.getItem('token'); // other method
 
+    // return <Component/> //bypass authentication
     
-    console.log(isAuthenticated)
-      
-    // return <Component/>
-    
-        return isAuthenticated ? (
-            <Component />
-        ) : (
-            <Redirect to={{ pathname: '/login' }} />
-        );
+    return isAuthenticated ? (
+        <Component />
+    ) : (
+        <Redirect to={{ pathname: '/login' }} />
+    );
 
 }
 

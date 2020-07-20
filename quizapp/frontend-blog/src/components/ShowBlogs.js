@@ -1,7 +1,6 @@
 import React,  {useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import {getBlogs} from '../redux/actions'
-import SinglePost from './SinglePost'
 
 const ShowBlogs = () =>  {
     const commentReducer = useSelector(state => state.commentReducer)
@@ -43,4 +42,4 @@ const ShowBlogs = () =>  {
     }
 }
 
-export default ShowBlogs
+export default ShowBlogs;
