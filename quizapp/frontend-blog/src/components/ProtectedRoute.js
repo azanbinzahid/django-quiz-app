@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import { Redirect } from 'react-router-dom'
 import {useSelector, useDispatch} from 'react-redux'
-import {autoLogin} from '../redux/actions'
+import {autoLogin} from 'redux/actions'
 
 const ProtectedRoute = (props) => {
     const userReducer = useSelector(state => state.userReducer)

@@ -8,7 +8,7 @@ export const logUserOut = () => ({type: "LOG_OUT"})
 // Methods
 
 export const getBlogs = () => dispatch => {
-    fetch(`http://localhost:8000/blog/api/blog/`, {
+    fetch(`${process.env.REACT_APP_BASE_URL}/blog/api/blog/`, {
         headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",
@@ -22,7 +22,7 @@ export const getBlogs = () => dispatch => {
   }
 
 export const fetchUser = (userInfo) => dispatch => {
-    fetch(`http://localhost:8000/token-auth/`, {
+    fetch(`${process.env.REACT_APP_BASE_URL}/token-auth/`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -48,7 +48,7 @@ export const fetchUser = (userInfo) => dispatch => {
 }
 
 export const signUserUp = (userInfo) => dispatch => {
-    fetch(`http://localhost:8000/blog/users/`, {
+    fetch(`${process.env.REACT_APP_BASE_URL}/blog/users/`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -77,7 +77,7 @@ export const signUserUp = (userInfo) => dispatch => {
 }
 
 export const autoLogin = () => dispatch => {
-    fetch(`http://localhost:8000/blog/current_user/`, {
+    fetch(`${process.env.REACT_APP_BASE_URL}/blog/current_user/`, {
         headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",
@@ -107,7 +107,7 @@ export const autoLogin = () => dispatch => {
 }
 
 export const createPost = (post) => dispatch => {
-    fetch(`http://localhost:8000/blog/api/blog/`,{
+    fetch(`${process.env.REACT_APP_BASE_URL}/blog/api/blog/`,{
         method: "POST",
         headers: {
             "Content-Type": "application/json",
