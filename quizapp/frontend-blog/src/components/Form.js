@@ -26,8 +26,8 @@ const Form = () => {
  
 
     return ( 
-        <div className="container pd-5">
-        <form onSubmit={handlePost} className="col-md-10">
+        <div className="container">
+        <form onSubmit={handlePost} className="col-12">
             <div className="form-group">
                 <label>Title for the Blog:</label>
                 <input type="text" ref={titleRef} className="form-control" placeholder="Title.." />

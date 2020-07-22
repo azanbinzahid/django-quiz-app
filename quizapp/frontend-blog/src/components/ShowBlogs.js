@@ -30,10 +30,6 @@ const ShowBlogs = () =>  {
     return (
     <div>
         <div className="row">
-            <br/>
-            <br/>
-            <br/>
-            <br/>
         {allBlogs}
         </div>
     </div>)

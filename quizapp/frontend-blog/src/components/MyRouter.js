@@ -48,8 +48,8 @@ const MyRouter = () => {
               </div>
             </nav>
 
-            <div className="auth-wrapper">
-              <div className="auth-inner">
+            <div className="content-wrapper">
+              <div className="content-inner">
                 <Switch>
                   <Route exact path='/' component={Login} />
                   <Route path="/login" component={Login} />
