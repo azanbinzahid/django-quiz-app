@@ -1,17 +1,16 @@
 import React, { useCallback,  createRef } from 'react';
-import {useDispatch} from 'react-redux'
+import {connect} from 'react-redux'
 import {createPost} from 'redux/actions'
 
+
  
-const Form = () => {
+const Form = (props) => {
     //create refs
     let authorRef = createRef();
     let titleRef = createRef();
     let contentRef = createRef();
     let categoryRef = createRef();
  
-    const dispatch = useDispatch()
-    
     
     const handlePost = useCallback((e) => {
         e.preventDefault();
@@ -21,7 +20,7 @@ const Form = () => {
             body: contentRef.current.value,
             category: categoryRef.current.value
         }
-        dispatch(createPost(post))
+        props.createPost(post)
     })
  
 
@@ -59,4 +58,10 @@ const Form = () => {
         );
 }
  
-export default Form;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        createPost: (post) => dispatch(createPost(post))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(Form);

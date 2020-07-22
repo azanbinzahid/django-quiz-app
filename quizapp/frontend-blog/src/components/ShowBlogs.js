@@ -1,29 +1,23 @@
 import React,  {useEffect} from 'react'
-import {useSelector, useDispatch} from 'react-redux'
+import {useSelector, connect} from 'react-redux'
 import {getBlogs} from 'redux/actions'
 
-const ShowBlogs = () =>  {
+const ShowBlogs = (props) =>  {
     const commentReducer = useSelector(state => state.commentReducer)
     const userReducer = useSelector(state => state.userReducer)
-    const dispatch = useDispatch()
     
     useEffect(() => {
-      dispatch(getBlogs())
+      props.getBlogs()
     }, [])
     
-    console.log(userReducer)
-    console.log(commentReducer)
 
     if (userReducer.loggedIn) {
     let allBlogs = commentReducer.blogs.map((blog)=>{
         return (
-            <div>
-            <div className="col-12 border border-primary">
+            <div key={blog.id} className="col-6 border border-primary">
                 <h3>Title: {blog.title}</h3>
                 <h5>Author: {blog.author}</h5>
                 <p>{blog.body}</p>
-            </div>
-            <br/>
             </div>
         )
     })
@@ -38,4 +32,10 @@ const ShowBlogs = () =>  {
     }
 }
 
-export default ShowBlogs;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getBlogs: () => dispatch(getBlogs())
+    }
+}
+
+export default connect(null, mapDispatchToProps)(ShowBlogs);

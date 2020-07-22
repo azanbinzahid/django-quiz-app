@@ -19,7 +19,6 @@ class Login extends React.Component {
     onSubmit = (e) => {
         e.preventDefault()
         this.props.fetchUser(this.state)
-        // this.props.history.push('/blogs')
     }
 
     render(){

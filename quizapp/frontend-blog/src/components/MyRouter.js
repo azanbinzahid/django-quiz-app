@@ -1,5 +1,5 @@
 import React, {useEffect, useCallback} from 'react'
-import {useSelector, useDispatch} from 'react-redux'
+import {useSelector, connect} from 'react-redux'
 import {Switch, Route, Link } from "react-router-dom";
 import {autoLogin, logUserOut} from 'redux/actions'
 import Login from 'components/Login'
@@ -9,16 +9,15 @@ import Form from 'components/Form'
 import ProtectedRoute from 'components/ProtectedRoute'
 
 
-const MyRouter = () => {
+const MyRouter = (props) => {
   const userReducer = useSelector(state => state.userReducer)
-  const dispatch = useDispatch()
   
   useEffect(() => {
-    dispatch(autoLogin())
+    props.autoLogin()
   }, [])
 
   const handleLogout = useCallback(() => {
-    dispatch(logUserOut())
+    props.logUserOut()
   })
 
   return (
@@ -63,4 +62,11 @@ const MyRouter = () => {
   )
 }
 
-export default MyRouter;
+const mapDispatchToProps = (dispatch) => {
+  return {
+      autoLogin: () => dispatch(autoLogin()),
+      logUserOut: () => dispatch(logUserOut())
+  }
+}
+
+export default connect(null, mapDispatchToProps)(MyRouter);
