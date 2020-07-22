@@ -7,4 +7,4 @@ const rootReducer = combineReducers({
     commentReducer
 })
 
-export default rootReducer
+export default rootReducer;
