@@ -9,15 +9,12 @@ html body {
 .content-wrapper {
   margin: 50px;
   margin-top: 65px; }
-
-.content-wrapper .content-inner {
-  background: white;
-  padding: 50px;
-  border-radius: 15px; }
-
-.content-wrapper .content-inner h3, .content-wrapper .content-inner h5 {
-  text-align: center; }
-
-.content-wrapper .form {
-  display: grid;
-  justify-content: center; }
+  .content-wrapper .content-inner {
+    background: white;
+    padding: 50px;
+    border-radius: 15px; }
+    .content-wrapper .content-inner h3, .content-wrapper .content-inner h5 {
+      text-align: center; }
+  .content-wrapper .form {
+    display: grid;
+    justify-content: center; }

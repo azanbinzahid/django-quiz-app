@@ -1,13 +1,13 @@
 import React from 'react'
 import {BrowserRouter} from "react-router-dom";
-import MyRouter from 'components/MyRouter';
+import Router from 'components/Router';
 import './App.css'
 
 
 const App = () => {
   return (
     <BrowserRouter>
-      <MyRouter />
+      <Router />
    </BrowserRouter>
   )
 }
