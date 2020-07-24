@@ -1,6 +1,6 @@
-import React,  {useEffect} from 'react'
+import React,  {useEffect, useCallback} from 'react'
 import {useSelector, connect} from 'react-redux'
-import {getBlogs} from 'redux/actions'
+import {getBlogs, deletePost} from 'redux/actions'
 
 const ShowBlogs = (props) =>  {
     const commentReducer = useSelector(state => state.commentReducer)
@@ -9,6 +9,11 @@ const ShowBlogs = (props) =>  {
     useEffect(() => {
       props.getBlogs()
     }, [])
+
+    const handleDelete = useCallback((postId) => {
+        props.deletePost(postId)
+    })
+
     
 
     if (userReducer.loggedIn) {
@@ -16,6 +21,7 @@ const ShowBlogs = (props) =>  {
         return (
             <div key={blog.id} className="col-6 border border-primary">
                 <h3>Title: {blog.title}</h3>
+                <button onClick={() => handleDelete(blog.id)}> X </button>
                 <h5>Author: {blog.author}</h5>
                 <p>{blog.body}</p>
             </div>
@@ -34,7 +40,8 @@ const ShowBlogs = (props) =>  {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getBlogs: () => dispatch(getBlogs())
+        getBlogs: () => dispatch(getBlogs()),
+        deletePost: (postId) => dispatch(deletePost(postId))
     }
 }
 

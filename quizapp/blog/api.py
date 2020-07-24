@@ -1,10 +1,12 @@
 from .models import Blog
 from rest_framework import viewsets, permissions, status, generics
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib.auth.models import User
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from django.views.decorators.csrf import csrf_exempt
+from django.core.exceptions import ObjectDoesNotExist
 from .serializers import UserSerializer, UserSerializerWithToken, BlogSerializer
 
 
@@ -43,4 +45,18 @@ class BlogViewSet(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+@api_view(["DELETE"])
+@csrf_exempt
+@permission_classes([permissions.IsAuthenticated])
+def delete_blog(request, blog_id):
+    try:
+        blog = Blog.objects.get(id=blog_id)
+        blog.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    except ObjectDoesNotExist as e:
+        return JsonResponse({'error': str(e)}, safe=False, status=status.HTTP_404_NOT_FOUND)
+    except Exception:
+        return JsonResponse({'error': 'Something went wrong'}, safe=False, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 

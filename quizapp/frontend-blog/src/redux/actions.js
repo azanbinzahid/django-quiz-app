@@ -3,10 +3,9 @@
 const setUser = (payload) => ({ type: "SET_USER", payload})
 const setBlogs = (payload) => ({ type: "SET_BLOGS", payload})
 
-export const logUserOut = () => ({type: "LOG_OUT"})
-
 // Methods
 
+export const logUserOut = () => ({type: "LOG_OUT"})
 export const getBlogs = () => dispatch => {
     fetch(`${process.env.REACT_APP_BASE_URL}/blog/api/blog/`, {
         headers: {
@@ -125,7 +124,34 @@ export const createPost = (post) => dispatch => {
         } 
     })
     .then(data => {
-        console.log("write", data)
+        // console.log("write", data)
+    })
+    .catch((error)=>{
+        console.log(error)
+    })
+}
+
+export const deletePost = (postId) => dispatch => {
+    fetch(`${process.env.REACT_APP_BASE_URL}/blog/api/blog/${postId}/`,{
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization": `JWT ${localStorage.getItem("token")}`
+        },
+        // body: JSON.stringify(post)
+    })
+    .then(res => {
+        console.log(res)
+        if (!res.ok){
+            throw new Error(res.details)
+        } else {
+            return res
+        } 
+    })
+    .then(data => {
+        // console.log("delete", data)
+        dispatch(getBlogs())
     })
     .catch((error)=>{
         console.log(error)
