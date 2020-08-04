@@ -1,164 +1,45 @@
-import React, { Component } from 'react';
- 
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
-import axios from 'axios';
-import Swal from 'sweetalert2';
- 
-import {Header, Navigation} from './Layout/Layout';
-import Posts from './Posts';
-import SinglePost from './SinglePost';
-import Form from './Form';
-import EditPost from './EditPost';
- 
-class Router extends Component {
-    state = {  
-        posts: []
-    }
- 
-    componentDidMount() {
-        this.getPost();
-    }
- 
-    getPost = () => {
-        axios.get(`http://localhost:8000/blog/api/blog`)
-             .then( res => {
-                 this.setState({
-                     posts: res.data
-                 }) 
-             })
-    }
- 
-    deletePost = (id) => {
-        //console.log(id);
-        axios.delete(`http://localhost:8000/blog/api/blog/${id}/`)
-        .then(res => {
-            if (res.status === 200) {
-                const posts = [...this.state.posts];
-                let result = posts.filter(post => (
-                    post.id !== id
-                ));
-                this.setState({
-                    posts: result
-                })
-            } 
-        })
-    }
- 
-    createPost = (post) => {
-        let axiosConfig = {
-            headers: {
-                'Content-Type': 'application/json',
-                // "Access-Control-Allow-Origin": "*",
-            }
-          };
-        axios.post(`http://localhost:8000/blog/api/blog/`, post, axiosConfig)
-             .then(res => {
-                 if (res.status === 201) {
-                    Swal.fire(
-                        'Post Create',
-                        'It is created correctly.',
-                        'success'
-                    )
- 
-                    let postId = {id: res.data.id};
-                    const newPost = Object.assign({}, res.data.post, postId)
- 
-                    this.setState(prevState => ({
-                        posts: [...prevState.posts, newPost]
-                    }))
-                 }
-             })
-    }
- 
-    editPost = (postUpdate) => {
-        const {id} = postUpdate;
- 
-        axios.put(`http://localhost:8000/blog/api/blog/${id}/`, postUpdate)
-             .then(res => {
-                 if (res.status === 200) {
-                    Swal.fire(
-                        'Post Updated',
-                        'The changes were saved correctly.',
-                        'success'
-                    )
- 
-                    let postId = res.data.id;
- 
-					const posts = [...this.state.posts];
- 
-                    const postEdit = posts.findIndex(post => postId === post.id)
- 
-                    posts[postEdit] = postUpdate;
-                    this.setState({
-                        posts 
-                    })
-                 }
-             })
-    }
- 
-    render() { 
-        return (  
-            <BrowserRouter>
- 
-                <div className="container">
-                    <Header />
-                    <div className="row justify-content-center">
- 
-                        <Navigation />
- 
-                        <Switch>
-                            <Route exact path="/" render={ () => {
-                                return(
-                                    <Posts 
-                                        posts={this.state.posts}
-                                        deletePost={this.deletePost}
-                                    />
-                                );
-                            }} />
- 
-                            <Route exact path="/post/:postId" render={ (props) => {
-                                let idPost = props.location.pathname.replace('/post/', '')
- 
-                                const posts=this.state.posts;
-                                let filter;
-                                filter = posts.filter(post => (
-                                    post.id === Number(idPost)
-                                ))
- 
- 
-                                return(
-                                    <SinglePost 
-                                        post={filter[0]} 
-                                    />
-                                )
-                            }} />
-                            <Route exact path="/create" render={() => {
-                                return(
-                                    <Form 
-                                        createPost={this.createPost}
-                                    />
-                                );
-                            }}
-                            />
-                            <Route exact path="/edit/:postId" render={ (props) => {
-                                let idPost = props.location.pathname.replace('/edit/', '')
-                                const posts=this.state.posts;
-                                let filter;
-                                filter = posts.filter(post => (
-                                    post.id === Number(idPost)
-                                ))                                
-                                return(
-                                    <EditPost
-                                        post={filter[0]} 
-                                        editPost={this.editPost}
-                                    />
-                                )
-                            }} />                            
-                        </Switch>
-                    </div>
-                </div>            
-            </BrowserRouter>
-        );
-    }
-} 
-export default Router;
+import React, {useEffect} from 'react'
+import {connect} from 'react-redux'
+import {Switch, Route} from "react-router-dom";
+import {autoLogin, logUserOut} from 'redux/actions'
+import Login from 'components/Login'
+import Signup from 'components/Signup'
+import ShowBlogs from 'components/ShowBlogs'
+import Form from 'components/Form'
+import ProtectedRoute from 'components/ProtectedRoute'
+import NavBar from 'components/NavBar'
+
+
+const Router = (props) => {
+  
+  useEffect(() => {
+    props.autoLogin()
+  }, [])
+
+
+  return (
+          <div className="App">
+            <NavBar/>
+            <div className="content-wrapper">
+              <div className="content-inner">
+                <Switch>
+                  <Route exact path='/' component={Login} />
+                  <Route path="/login" component={Login} />
+                  <Route path="/signup" component={Signup} />
+                  <ProtectedRoute path="/blogs" component={ShowBlogs} />
+                  <ProtectedRoute path="/write" component={Form} />
+                </Switch>
+              </div>     
+            </div>
+          </div>
+  )
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+      autoLogin: () => dispatch(autoLogin()),
+      logUserOut: () => dispatch(logUserOut())
+  }
+}
+
+export default connect(null, mapDispatchToProps)(Router);

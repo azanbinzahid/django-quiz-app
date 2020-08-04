@@ -1,7 +1,9 @@
-from rest_framework import routers
-from .api import BlogViewSet
+from django.urls import path
+from .api import current_user, UserList, BlogViewSet, delete_blog
 
-router = routers.DefaultRouter()
-router.register('api/blog', BlogViewSet, 'blog')
-
-urlpatterns = router.urls
+urlpatterns = [
+    path('current_user/', current_user),
+    path('users/', UserList.as_view()),
+    path('api/blog/', BlogViewSet.as_view()),
+    path('api/blog/<int:blog_id>/', delete_blog),
+]
